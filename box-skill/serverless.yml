@@ -1,0 +1,19 @@
+# This file is the main config file for alkymi service.
+
+service: boxSkillService
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  boxSkill:
+    handler: handler.boxSkill
+    events:
+      - http:
+          path: boxskill
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline
