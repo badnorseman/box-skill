@@ -141,6 +141,7 @@ const SkillsErrorEnum = {
  */
 
 function FilesReader(body) {
+  console.debug(`FilesReader: ${JSON.stringify(body)}`); // Remove when implemented successfully
   const eventBody = JSON.parse(body);
   this.requestId = eventBody.id;
   this.skillId = eventBody.skill.id;
