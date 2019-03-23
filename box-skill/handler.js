@@ -1,6 +1,5 @@
 "use strict";
 const { FilesReader, SkillsWriter } = require("skills-kit-lib/skills-kit-2.0");
-const { getMockTopics } = require("./getMockTopics");
 
 /** Box Skill */
 
@@ -12,8 +11,7 @@ const { getMockTopics } = require("./getMockTopics");
  * @return {Object}            metadata card
  */
 module.exports.boxSkillFunction = async (event = {}, context, callback) => {
-  // console.debug(`Skill triggered by event: ${JSON.stringify(event)}`);
-  console.debug(`Skill triggered by event: ${JSON.stringify(event)}`);
+  console.debug(`Skill triggered by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
 
   // Make sure that event has body component
   if (!event.body) {
@@ -24,10 +22,14 @@ module.exports.boxSkillFunction = async (event = {}, context, callback) => {
       })
     };
   }
-
+  
   const { body } = event;
+  console.debug(`Hello 1: ${JSON.stringify(body)}`); // Remove when implemented successfully
   const filesReader = new FilesReader(body);
+  console.debug(`Hello 2: ${JSON.stringify(body)}`); // Remove when implemented successfully
   const fileContext = filesReader.getFileContext();
+  console.debug(`Hello 3: ${JSON.stringify(body)}`); // Remove when implemented successfully
+
   const skillsWriter = new SkillsWriter(fileContext);
   console.debug("File context: ", fileContext); // Remove when implemented successfully
 
@@ -42,7 +44,7 @@ module.exports.boxSkillFunction = async (event = {}, context, callback) => {
      * Save metadata into topics
      */
     const cards = [];
-    const topics = getMockTopics();
+    const topics = JSON.stringify([{ text: "Box Skill" }]); // Remove when implemented successfully
     cards.push(skillsWriter.createTopicsCard(topics));
 
     await skillsWriter.saveDataCards(cards);

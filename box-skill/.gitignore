@@ -1,0 +1,4 @@
+.DS_Store
+.serverless/
+coverage/
+node_modules/
