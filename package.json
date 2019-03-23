@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "handler.js",
   "scripts": {
-    "build": "npm install; npm link ../skills-kit-lib;",
+    "build": "npm install; npm link ./skills-kit-library;",
     "deploy": "npm run build; ./node_modules/.bin/serverless deploy",
     "test": "NODE_ENV=dev ./node_modules/.bin/jest --coverage",
     "undeploy": "NODE_ENV=dev ./node_modules/.bin/serverless remove -v"

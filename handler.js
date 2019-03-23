@@ -1,5 +1,8 @@
 "use strict";
-const { FilesReader, SkillsWriter } = require("skills-kit-lib/skills-kit-2.0");
+const {
+  FilesReader,
+  SkillsWriter
+} = require("./skills-kit-library/skills-kit-2.0");
 
 /** Box Skill */
 
@@ -22,7 +25,7 @@ module.exports.boxSkillFunction = async (event = {}, context, callback) => {
       })
     };
   }
-  
+
   const { body } = event;
   console.debug(`Hello 1: ${JSON.stringify(body)}`); // Remove when implemented successfully
   const filesReader = new FilesReader(body);
