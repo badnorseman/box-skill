@@ -11,7 +11,7 @@ const { getMockTopics } = require("./getMockTopics");
  * @param {Function} callback  called if skill processed successful
  * @return {Object}            metadata card
  */
-module.exports.boxSkill = async (event = {}, context, callback) => {
+module.exports.boxSkillFunction = async (event = {}, context, callback) => {
   // console.debug(`Skill triggered by event: ${JSON.stringify(event)}`);
   console.debug(`Skill triggered by event: ${JSON.stringify(event)}`);
 
