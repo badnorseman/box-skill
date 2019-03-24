@@ -1,8 +1,10 @@
 service: boxSkillService
 
 provider:
-  name: aws
-  runtime: nodejs8.10
+  name: google
+  runtime: nodejs
+  project: box-skill
+  credentials: ~/.gcloud/keyfile.json
 
 functions:
   boxSkillFunction:
