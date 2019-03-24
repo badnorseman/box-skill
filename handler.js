@@ -27,13 +27,11 @@ module.exports.boxSkillFunction = async (event = {}, context, callback) => {
   }
 
   const { body } = event;
-  console.debug(`body: ${JSON.stringify(body)}`); // Remove when implemented successfully
   const filesReader = new FilesReader(body);
-  console.debug(`filesReader: ${JSON.stringify(filesReader)}`); // Remove when implemented successfully
+  // console.debug(`filesReader: ${filesReader}`); // Remove when implemented successfully
   const fileContext = filesReader.getFileContext();
-
   const skillsWriter = new SkillsWriter(fileContext);
-  console.debug("File context: ", fileContext); // Remove when implemented successfully
+  console.debug("fileContext", fileContext); // Remove when implemented successfully
 
   await skillsWriter.saveProcessingCard();
 
