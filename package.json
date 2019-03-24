@@ -4,7 +4,7 @@
   "description": "Box Skill",
   "author": "Dan Jensen",
   "license": "MIT",
-  "main": "handler.js",
+  "main": "index.js",
   "scripts": {
     "build": "npm install; npm link ./skills-kit-library;",
     "deploy": "npm run build; ./node_modules/.bin/serverless deploy",
@@ -20,6 +20,7 @@
     "jest": "24.5.0",
     "prettier": "1.16.4",
     "pretty-quick": "1.10.0",
+    "serverless-google-cloudfunctions": "^2.3.2",
     "serverless-offline": "4.9.2"
   },
   "repository": {

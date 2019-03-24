@@ -1,4 +1,4 @@
-service: boxSkillService
+service: box-skill-service
 
 provider:
   name: google
@@ -6,14 +6,18 @@ provider:
   project: box-skill
   credentials: ~/.gcloud/keyfile.json
 
-functions:
-  boxSkillFunction:
-    handler: handler.boxSkillFunction
-    events:
-      - http:
-          path: boxskill
-          method: post
-          cors: true
-
 plugins:
+  - serverless-google-cloudfunctions
   - serverless-offline
+
+functions:
+  first:
+    handler: http
+    events:
+      - http: path
+  #second:
+  #  handler: search
+  #  events:
+  #    - event:
+  #        eventType: providers/cloud.pubsub/eventTypes/topic.publish
+  #        resource: projects/*/topics/my-topic
