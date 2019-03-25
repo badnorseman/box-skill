@@ -15,9 +15,9 @@ functions:
     handler: http
     events:
       - http: path
-  #second:
-  #  handler: search
-  #  events:
-  #    - event:
-  #        eventType: providers/cloud.pubsub/eventTypes/topic.publish
-  #        resource: projects/*/topics/my-topic
+  second:
+    handler: search
+    events:
+      - event:
+        eventType: providers/cloud.pubsub/eventTypes/topic.publish
+        resource: projects/*/topics/metadata

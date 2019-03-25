@@ -1,4 +1,4 @@
-const { search } = require("../index");
+const { http, search } = require("../index");
 
 const fileId = 34426356747;
 const fileName = "sampleFileName.mp3";
@@ -28,6 +28,17 @@ const eventBody = {
   }
 };
 
+describe("http", () => {
+  test.skip("gives message for processing succeeds", () => {
+    expect.assertions(1);
+    return http().then(data =>
+      expect(data).toEqual({
+        message: "Processed successfully"
+      })
+    );
+  });
+});
+
 describe("search", () => {
   test("gives bad request when event is missing", async () => {
     expect.assertions(1);
@@ -46,7 +57,7 @@ describe("search", () => {
     const body = JSON.stringify(eventBody);
     const data = await search({ body });
     expect(JSON.parse(data.body)).toEqual({
-      message: "Skill processing failed for file"
+      message: "Processing failed for file"
     });
   });
 
@@ -55,7 +66,7 @@ describe("search", () => {
     const body = JSON.stringify(eventBody);
     const data = await search({ body });
     expect(JSON.parse(data.body)).toEqual({
-      message: "Skill processed successfully"
+      message: "Processed successfully"
     });
   });
 });
