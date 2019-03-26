@@ -20,7 +20,6 @@
     "jest": "24.5.0",
     "prettier": "1.16.4",
     "pretty-quick": "1.10.0",
-    "serverless-google-cloudfunctions": "^2.3.2",
     "serverless-offline": "4.9.2"
   },
   "repository": {

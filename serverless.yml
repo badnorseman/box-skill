@@ -1,23 +1,32 @@
 service: box-skill-service
 
 provider:
-  name: google
-  runtime: nodejs
-  project: box-skill
-  credentials: ~/.gcloud/keyfile.json
+  name: aws
+  runtime: nodejs8.10
 
 plugins:
-  - serverless-google-cloudfunctions
   - serverless-offline
 
+package:
+  exclude:
+    - .git/**
+    - .gitignore
+
+# Define function environment variables here
+# environment:
+#   variable2: value2
+
 functions:
-  first:
-    handler: http
+  http:
+    handler: handler.http
     events:
-      - http: path
-  second:
-    handler: search
+      - http:
+          path: http
+          method: get
+  invoke:
+    handler: handler.invoke
     events:
-      - event:
-        eventType: providers/cloud.pubsub/eventTypes/topic.publish
-        resource: projects/*/topics/metadata
+      - http:
+          path: boxskill
+          method: post
+          cors: true

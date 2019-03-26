@@ -8,18 +8,23 @@ const {
  * Http
  * @return {Object}  status code and message
  */
-exports.http = (request, response) => {
-  response.status(200).send("Processed successfully");
+exports.http = async event => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Processed successfully"
+    })
+  };
 };
 
 /**
- * Search to retrieve metadata for image file
- * @param {Object} event       event that triggers search
+ * Invoke
+ * @param {Object} event       event that triggers box skill
  * @param {string} context     not used
- * @param {Function} callback  called if skill processed successful
- * @return {Object}            metadata card
+ * @param {Function} callback  called if box skill processed successful
+ * @return {Object}            data
  */
-exports.search = async (event = {}, context, callback) => {
+exports.invoke = async (event = {}, context, callback) => {
   console.debug(`Skill triggered by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
 
   // Make sure that event has body component
@@ -44,7 +49,7 @@ exports.search = async (event = {}, context, callback) => {
      * TODO:
      * Replace mock with call to real API
      * Read file from Box by passing fileContext.fileDownloadURL
-     * Save metadata into topics
+     * Save data into topics
      */
     const cards = [];
     const topics = JSON.stringify([{ text: "Box Skill" }]); // Remove when implemented successfully
