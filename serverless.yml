@@ -27,6 +27,6 @@ functions:
     handler: handler.invoke
     events:
       - http:
-          path: boxskill
+          path: invoke
           method: post
           cors: true
