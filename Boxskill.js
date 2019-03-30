@@ -18,7 +18,8 @@ class Boxskill {
    * @return {Object}            data
    */
   async invoke() {
-    const filesReader = new FilesReader(this.event);
+    const { body } = this.event;
+    const filesReader = new FilesReader(body);
     const fileContext = filesReader.getFileContext();
     const skillsWriter = new SkillsWriter(fileContext);
 

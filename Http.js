@@ -8,7 +8,12 @@ class Http {
    * @return {Object}  event
    */
   get() {
-    return this.event;
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: this.event
+      })
+    };
   }
 }
 

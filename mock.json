@@ -1,0 +1,90 @@
+{
+  "type": "skill_invocation",
+  "skill": {
+    "id": "137",
+    "type": "skill",
+    "name": "Hello World Skill",
+    "api_key": "hxel2s12wd2h9r8ne103c4gjbqefofih"
+  },
+  "token": {
+    "write": {
+      "access_token": "REDACTED",
+      "expires_in": 1540924150,
+      "restricted_to": "[{\"scope\":\"gcm\"},{\"scope\":\"item_upload\",\"object_id\":340708371275,\"object_type\":\"file\"},{\"scope\":\"manage_skill_invocations\"}]",
+      "token_type": "bearer"
+    },
+    "read": {
+      "access_token": "REDACTED",
+      "expires_in": 1540924150,
+      "restricted_to": "[{\"scope\":\"gcm\"},{\"scope\":\"item_read\",\"object_id\":340708371275,\"object_type\":\"file\"}]",
+      "token_type": "bearer"
+    }
+  },
+  "status": {
+    "state": "invoked",
+    "message": "",
+    "error_code": "",
+    "additional_info": ""
+  },
+  "id": "fd1d2e53-35f5-41fb-9c25-4ba326daf2f9_341016304",
+  "created_at": "2018-10-29T11:29:09-07:00",
+  "trigger": "FILE_CONTENT",
+  "enterprise": {
+    "type": "enterprise",
+    "id": "94713934",
+    "name": "Important Photo"
+  },
+  "source": {
+    "type": "file",
+    "id": "340708371275",
+    "name": "200386_main.jpg",
+    "sequence_id": "0",
+    "file_version": {
+      "id": "359740326875"
+    },
+    "owner_enterprise_id": "94713934",
+    "parent": {
+      "id": "56598494243"
+    },
+    "old_parent_id": "56598494243",
+    "collab_accessible_by": {
+      "type": "",
+      "id": "",
+      "name": "",
+      "login": ""
+    },
+    "size": 150031
+  },
+  "event": {
+    "event_id": "fd1d2e53-35f5-41fb-9c25-4ba326daf2f9",
+    "event_type": "ITEM_UPLOAD",
+    "created_at": "2018-10-29T11:29:09-07:00",
+    "created_by": {
+      "type": "user",
+      "id": "6122733934",
+      "name": "Box Skills",
+      "login": "boxskills-dev@boxdemo.com"
+    },
+    "source": {
+      "type": "file",
+      "id": "340708371275",
+      "name": "200386_main.jpg",
+      "sequence_id": "0",
+      "file_version": {
+        "id": "359740326875"
+      },
+      "owner_enterprise_id": "94713934",
+      "parent": {
+        "id": "56598494243"
+      },
+      "old_parent_id": "56598494243",
+      "collab_accessible_by": {
+        "type": "",
+        "id": "",
+        "name": "",
+        "login": ""
+      }
+    }
+  },
+  "parameters": {}
+}
