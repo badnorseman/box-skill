@@ -28,7 +28,6 @@ exports.invoke = async (event = {}, context, callback) => {
   const { body } = event;
   const filesReader = new FilesReader(body);
   const fileContext = filesReader.getFileContext();
-  console.debug(`fileContext: ${JSON.stringify(fileContext)}`); // eslint-disable-line no-console
   const skillsWriter = new SkillsWriter(fileContext);
 
   await skillsWriter.saveProcessingCard();
@@ -41,7 +40,8 @@ exports.invoke = async (event = {}, context, callback) => {
      * Save data into topics
      */
     const cards = [];
-    const topics = [{ text: "Box Skill" }]; // Remove when implemented successfully
+    console.debug(`fileDownloadURL: ${fileContext.fileDownloadURL}`); // Remove when implemented successfully
+    const topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
 
     await skillsWriter.saveDataCards(cards);
