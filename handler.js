@@ -1,8 +1,15 @@
 "use strict";
 const Http = require("Http");
 
+/**
+ * Invoke
+ * @param {Object} event       event that invoked box skill
+ * @param {string} context     not used
+ * @param {Function} callback  called if box skill processed successful
+ * @return {Object}            returned data
+ */
 exports.invoke = async (event = {}, context, callback) => {
-  console.debug(`Skill triggered by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
+  console.debug(`Skill invoked by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
 
   // Make sure that event has body component
   if (!event.body) {
@@ -50,6 +57,8 @@ exports.invoke = async (event = {}, context, callback) => {
 };
 
 exports.http = async event => {
+  console.debug(`Http invoked by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
+
   let h = new Http(event);
   return await h.get();
 };
