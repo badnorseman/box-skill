@@ -1,4 +1,8 @@
 "use strict";
+const {
+  FilesReader,
+  SkillsWriter
+} = require("./skills-kit-library/skills-kit-2.0");
 const Http = require("Http");
 
 /**
@@ -24,6 +28,7 @@ exports.invoke = async (event = {}, context, callback) => {
   const { body } = event;
   const filesReader = new FilesReader(body);
   const fileContext = filesReader.getFileContext();
+  console.debug(`fileContext: ${JSON.stringify(fileContext)}`); // eslint-disable-line no-console
   const skillsWriter = new SkillsWriter(fileContext);
 
   await skillsWriter.saveProcessingCard();
@@ -36,7 +41,7 @@ exports.invoke = async (event = {}, context, callback) => {
      * Save data into topics
      */
     const cards = [];
-    const topics = JSON.stringify([{ text: "Box Skill" }]); // Remove when implemented successfully
+    const topics = [{ text: "Box Skill" }]; // Remove when implemented successfully
     cards.push(skillsWriter.createTopicsCard(topics));
 
     await skillsWriter.saveDataCards(cards);
