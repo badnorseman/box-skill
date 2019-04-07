@@ -1,9 +1,42 @@
 "use strict";
+const https = require("https");
 const {
   FilesReader,
   SkillsWriter
 } = require("./skills-kit-library/skills-kit-2.0");
 const Http = require("Http");
+
+getModelData = fileDownloadURL => {
+  console.debug(`fileDownloadURL: ${fileDownloadURL}`); // Remove when implemented successfully
+
+  return new Promise((resolve, reject) => {
+    const modelURL = process.env.MODEL_URL;
+    console.debug(`modelURL: ${modelURL}`); // Remove when implemented successfully
+    const req = https.request(modelURL, res => {
+      if (res.statusCode !== 200) {
+        res.resume();
+        return;
+      }
+
+      let rawData = "";
+      res.setEncoding("utf8");
+      res.on("data", chunk => (rawData += chunk));
+      console.debug(`rawData: ${rawData}`); // Remove when implemented successfully
+      res.on("end", () => {
+        try {
+          const parsedData = JSON.parse(rawData);
+          resolve(parsedData);
+        } catch (error) {
+          reject(`Model returned error on parse ${error}`);
+        }
+      });
+    });
+    req.on("error", error => {
+      reject(`Model returned error on call ${error}`);
+    });
+    req.end();
+  });
+};
 
 /**
  * Invoke
@@ -40,8 +73,9 @@ exports.invoke = async (event = {}, context, callback) => {
      * Save data into topics
      */
     const cards = [];
-    console.debug(`fileDownloadURL: ${fileContext.fileDownloadURL}`); // Remove when implemented successfully
-    const topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
+    const topics = await getModelData(fileContext.fileDownloadURL);
+
+    topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
 
     await skillsWriter.saveDataCards(cards);
