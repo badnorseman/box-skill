@@ -1,17 +1,16 @@
 class Http {
-  constructor(event) {
-    this.event = event;
+  constructor(message) {
+    this.message = message || "Processed successfully";
   }
 
   /**
    * Http.get
-   * @return {Object}  event
+   * @return {Object} data
    */
   get() {
     return {
-      statusCode: 200,
       body: JSON.stringify({
-        message: this.event
+        message: this.message
       })
     };
   }

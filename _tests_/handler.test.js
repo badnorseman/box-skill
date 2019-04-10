@@ -1,4 +1,4 @@
-const { http, invoke } = require("../handler");
+const { invoke } = require("../handler");
 
 const fileId = 34426356747;
 const fileName = "sampleFileName.mp3";
@@ -27,17 +27,6 @@ const eventBody = {
     }
   }
 };
-
-describe("http", () => {
-  test.skip("gives message for processing succeeds", () => {
-    expect.assertions(1);
-    return http().then(data =>
-      expect(data).toEqual({
-        message: "Processed successfully"
-      })
-    );
-  });
-});
 
 describe("invoke", () => {
   test("gives bad request when event is missing", async () => {
