@@ -8,15 +8,16 @@
   "scripts": {
     "build": "npm install; npm link ./skills-kit-library;",
     "deploy": "npm run build; ./node_modules/.bin/serverless deploy",
+    "preload": "node --require dotenv/config .env",
     "test": "NODE_ENV=dev ./node_modules/.bin/jest --coverage",
     "undeploy": "NODE_ENV=dev ./node_modules/.bin/serverless remove -v"
   },
   "dependencies": {
-    "dotenv": "7.0.0",
     "serverless": "1.39.1"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
+    "dotenv": "7.0.0",
     "husky": "1.3.1",
     "jest": "24.5.0",
     "prettier": "1.16.4",

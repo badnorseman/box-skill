@@ -1,9 +1,9 @@
 "use strict";
-const http = require("http");
+const https = require("http");
 
 class Model {
   constructor(imageURL) {
-    this.imageURL = imageURL || require("./image.jpg");
+    this.imageURL = imageURL;
     this.modelURL =
       process.env.MODEL_URL || "http://138.197.66.204:5000/modelpost";
   }
@@ -14,20 +14,12 @@ class Model {
    * @return {Object}          data from model
    */
   get() {
-    console.debug(`imageURL: ${this.imageURL}`); // Remove when implemented successfully
     console.debug(`modelURL: ${this.modelURL}`); // Remove when implemented successfully
 
     return new Promise((resolve, reject) => {
-      // resolve ({
-      //   body: JSON.stringify({
-      //     message: "Processed successfully"
-      //   })
-      // });
-      const req = http.request(this.modelURL, res => {
-        console.debug(`statusCode: ${res.statusCode}`); // Remove when implemented successfully
-
+      const req = https.request(this.modelURL, res => {
         if (res.statusCode !== 200) {
-          const error = new Error();
+          const error = new Error(res.statusCode);
           reject(`Model returned error on call ${error}`);
         }
 
@@ -47,6 +39,43 @@ class Model {
       req.on("error", error => {
         reject(`Model returned error on call ${error}`);
       });
+      req.end();
+    });
+  }
+
+  /**
+   * Model.post
+   * @param {string} imageURL  url to image
+   * @return {Object}          data from model
+   */
+  post() {
+    console.debug(`modelURL: ${this.modelURL}`); // Remove when implemented successfully
+
+    return new Promise((resolve, reject) => {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": this.imageURL.length
+        }
+      };
+
+      const req = https.request(this.modelURL, options, res => {
+        let rawData = "";
+        res.setEncoding("utf8");
+        res.on("data", chunk => (rawData += chunk));
+        res.on("end", () => {
+          resolve({
+            body: JSON.stringify({
+              message: "Processed successfully"
+            })
+          });
+        });
+      });
+      req.on("error", error => {
+        reject(`Model returned error on call ${error}`);
+      });
+      req.write(this.imageURL);
       req.end();
     });
   }

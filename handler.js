@@ -4,7 +4,8 @@ const {
   FilesReader,
   SkillsWriter
 } = require("./skills-kit-library/skills-kit-2.0");
-const getDataFromModel = require("./getDataFromModel");
+const Http = require("./Http");
+const Model = require("./Model");
 
 /**
  * Invoke
@@ -34,14 +35,9 @@ exports.invoke = async (event = {}, context, callback) => {
   await skillsWriter.saveProcessingCard();
 
   try {
-    /**
-     * TODO:
-     * Replace mock with call to real API
-     * Read file from Box by passing fileContext.fileDownloadURL
-     * Save data into topics
-     */
     const cards = [];
-    const topics = await getDataFromModel(fileContext.fileDownloadURL);
+    const m = new Model(fileContext.fileDownloadURL);
+    const topics = await m.get();
 
     topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
