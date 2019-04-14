@@ -1,5 +1,8 @@
 "use strict";
+const FormData = require("form-data");
+const fs = require("fs");
 const https = require("http");
+const request = require("request");
 
 class Model {
   constructor(imageURL) {
@@ -14,8 +17,6 @@ class Model {
    * @return {Object}          data from model
    */
   get() {
-    console.debug(`modelURL: ${this.modelURL}`); // Remove when implemented successfully
-
     return new Promise((resolve, reject) => {
       const req = https.request(this.modelURL, res => {
         if (res.statusCode !== 200) {
@@ -44,6 +45,29 @@ class Model {
   }
 
   /**
+   * Model.getImage
+   * @param {string} imageURL  url to image
+   * @return {Object}          data from model
+   */
+  getImage() {
+    return new Promise((resolve, reject) => {
+      request(this.imageURL)
+        .on("error", error => {
+          reject(`Model returned error on call ${error}`);
+        })
+        .on("response", res => {
+          console.debug(`statusCode: ${res.statusCode}`); // Remove when implemented successfully
+          console.debug(`res: ${JSON.stringify(res)}`); // Remove when implemented successfully
+          resolve({
+            body: JSON.stringify({
+              message: "Processed successfully"
+            })
+          });
+        });
+    });
+  }
+
+  /**
    * Model.post
    * @param {string} imageURL  url to image
    * @return {Object}          data from model
@@ -52,31 +76,33 @@ class Model {
     console.debug(`modelURL: ${this.modelURL}`); // Remove when implemented successfully
 
     return new Promise((resolve, reject) => {
+      // request(this.imageURL).pipe(fs.createWriteStream("newImage.jpg"));
+
+      const formData = new FormData();
+      // formData.append("data", request(this.imageURL));
+      formData.append("file", fs.createReadStream("./image.jpg"));
+      console.debug(`formData: ${JSON.stringify(formData)}`); // Remove when implemented successfully
+
       const options = {
-        method: "POST",
+        url: this.modelURL,
         headers: {
-          "Content-Type": "application/json",
-          "Content-Length": this.imageURL.length
+          "Content-Type": "image/jpeg",
+          "Content-Length": Buffer.byteLength(this.imageURL)
         }
       };
+      console.debug(`options: ${JSON.stringify(options)}`); // Remove when implemented successfully
 
-      const req = https.request(this.modelURL, options, res => {
-        let rawData = "";
-        res.setEncoding("utf8");
-        res.on("data", chunk => (rawData += chunk));
-        res.on("end", () => {
-          resolve({
-            body: JSON.stringify({
-              message: "Processed successfully"
-            })
-          });
+      request.post(options, formData, (error, res, body) => {
+        console.debug(`res: ${res}`); // Remove when implemented successfully
+        if (error) {
+          reject(`Model returned error on call ${error}`);
+        }
+        resolve({
+          body: JSON.stringify({
+            message: "Processed successfully"
+          })
         });
       });
-      req.on("error", error => {
-        reject(`Model returned error on call ${error}`);
-      });
-      req.write(this.imageURL);
-      req.end();
     });
   }
 }
