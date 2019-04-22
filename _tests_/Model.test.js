@@ -14,7 +14,7 @@ describe("Model class", () => {
     });
   });
   describe("uploadFile method", () => {
-    test("gives data when processing succeeds", async () => {
+    test.skip("gives data when processing succeeds", async () => {
       jest.setTimeout(30000);
       const m = new Model();
       const filename = "3729?image=22";

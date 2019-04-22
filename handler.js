@@ -1,5 +1,4 @@
 "use strict";
-require("dotenv").config();
 const {
   FilesReader,
   SkillsWriter
@@ -29,6 +28,7 @@ exports.invoke = async (event = {}, context, callback) => {
   const { body } = event;
   const filesReader = new FilesReader(body);
   const fileContext = filesReader.getFileContext();
+  console.debug(`fileContext: ${JSON.stringify(fileContext)}`); // Remove when implemented successfully
   const skillsWriter = new SkillsWriter(fileContext);
 
   await skillsWriter.saveProcessingCard();
