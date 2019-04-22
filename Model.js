@@ -1,30 +1,28 @@
 "use strict";
-const FormData = require("form-data");
+// const FormData = require("form-data");
 const fs = require("fs");
 const request = require("request");
 
 class Model {
   constructor() {
-    this.modelURL =
-      process.env.MODEL_URL || "http://159.203.95.88/api/test_upload";
+    this.modelURL = process.env.MODEL_URL || "http://159.203.95.88/api/";
   }
 
   /**
-   * Model.testupload
+   * testUpload
    * @param {string} fileURL  url to file
    * @return {Object}         data from model
    */
-  testupload(fileURL) {
+  testUpload(fileURL) {
     return new Promise((resolve, reject) => {
       const options = {
-        method: "POST",
-        url: this.modelURL,
+        url: this.modelURL + "test_upload",
         formData: {
-          file: fs.createReadStream(__dirname + fileURL)
+          file: request(fileURL)
         }
       };
 
-      request(options, (error, res, body) => {
+      request.post(options, (error, res, body) => {
         if (error) {
           reject(`Model returned error on call ${error}`);
         }
@@ -36,28 +34,29 @@ class Model {
   }
 
   /**
-   * Model.uploadfile
+   * uploadFile
    * @param {string} fileURL  url to file
    * @return {Object}         data from model
    */
-  uploadfile(fileURL) {
+  uploadFile(fileURL) {
     return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append("file", request(fileURL));
-
       const options = {
-        uri: this.modelURL,
-        form: formData
+        url: this.modelURL + "classify",
+        formData: {
+          file: request(fileURL)
+        }
       };
 
       request.post(options, (error, res, body) => {
+        console.debug(`statusCode: ${JSON.stringify(res.statusCode)}`); // Remove when implemented successfully
+        console.debug(`error: ${JSON.stringify(error)}`); // Remove when implemented successfully
+        console.debug(`body: ${JSON.stringify(body)}`); // Remove when implemented successfully
+
         if (error) {
           reject(`Model returned error on call ${error}`);
         }
         resolve({
-          body: JSON.stringify({
-            message: "Processed successfully"
-          })
+          body
         });
       });
     });
