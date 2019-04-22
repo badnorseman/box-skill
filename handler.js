@@ -4,7 +4,6 @@ const {
   FilesReader,
   SkillsWriter
 } = require("./skills-kit-library/skills-kit-2.0");
-const Http = require("./Http");
 const Model = require("./Model");
 
 /**
@@ -36,9 +35,9 @@ exports.invoke = async (event = {}, context, callback) => {
 
   try {
     const cards = [];
-    const m = new Model(fileContext.fileDownloadURL);
-    const topics = await m.get();
-
+    const m = new Model();
+    const topics = await m.uploadFile(fileContext.fileDownloadURL);
+    console.debug(`topics: ${JSON.stringify(topics)}`); // Remove when implemented successfully
     topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
 
@@ -57,11 +56,4 @@ exports.invoke = async (event = {}, context, callback) => {
       })
     });
   }
-};
-
-exports.http = async event => {
-  console.debug(`Http invoked by event: ${JSON.stringify(event)}`); // eslint-disable-line no-console
-
-  let h = new Http();
-  return await h.get();
 };

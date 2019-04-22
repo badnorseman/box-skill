@@ -1,5 +1,4 @@
 "use strict";
-// const FormData = require("form-data");
 const fs = require("fs");
 const request = require("request");
 
