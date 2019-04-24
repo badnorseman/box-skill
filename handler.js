@@ -3,7 +3,8 @@ const {
   FilesReader,
   SkillsWriter
 } = require("./skills-kit-library/skills-kit-2.0");
-const Model = require("./Model");
+const readFile = require("./readFile");
+const uploadFile = require("./uploadFile");
 
 /**
  * Invoke
@@ -28,19 +29,17 @@ exports.invoke = async (event = {}, context, callback) => {
   const { body } = event;
   const filesReader = new FilesReader(body);
   const fileContext = filesReader.getFileContext();
-  console.debug(`fileContext: ${JSON.stringify(fileContext)}`); // Remove when implemented successfully
   const skillsWriter = new SkillsWriter(fileContext);
 
   await skillsWriter.saveProcessingCard();
 
   try {
     const cards = [];
-    const m = new Model();
-    const topics = await m.uploadFile(fileContext.fileDownloadURL);
-    console.debug(`topics: ${JSON.stringify(topics)}`); // Remove when implemented successfully
-    topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
+    const file = await readFile(fileContext.fileDownloadURL);
+    const result = await uploadFile(file);
+    console.debug(`result: ${JSON.stringify(result)}`); // Remove when implemented successfully
+    const topics = [{ text: fileContext.fileType }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
-
     await skillsWriter.saveDataCards(cards);
   } catch (error) {
     console.error(
