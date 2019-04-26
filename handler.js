@@ -34,9 +34,8 @@ exports.invoke = async (event = {}, context, callback) => {
 
   try {
     const cards = [];
-    const fileURL = fileContext.fileDownloadURL;
-    const results = await api.readAndClassifyFile(fileURL);
-    console.debug(`results: ${JSON.stringify(results)}`); // Remove when implemented successfully
+    const api = new Api();
+    const results = await api.readAndClassifyFile(fileContext.fileDownloadURL);
     const topics = [{ text: results }]; // eslint-disable-line no-console
     cards.push(skillsWriter.createTopicsCard(topics));
     await skillsWriter.saveDataCards(cards);
