@@ -1,69 +1,69 @@
-const fs = require("fs");
 const request = require("request");
 
 class Api {
   constructor() {
-    this.url = process.env.API || "http://159.203.95.88/api/";
+    this.apiURL = process.env.API_URL || "http://165.227.214.162/api/";
   }
 
   /**
-   * testUpload
-   * @param {string} file  file
+   * readFileAndtestUpload
+   * @param {string} fileURL  url to file
    * @return {Object}
    */
-  testUpload(file) {
+  readFileAndtestUpload(fileURL) {
     return new Promise((resolve, reject) => {
-      const options = {
-        url: this.url + "test_upload",
-        formData: {
-          file: file
-        }
-      };
-      request.post(options, (error, res, body) => {
-        if (error) {
-          reject(`Model returned error on call ${error}`);
-        }
-        resolve({
-          body
-        });
-      });
-    });
-  }
-
-  /**
-   * uploadFile
-   * @param {string} file  file
-   * @return {Object}
-   */
-  uploadFile(file) {
-    return new Promise((resolve, reject) => {
-      const options = {
-        url: this.url + "classify",
-        formData: {
-          file: file
-        }
-      };
-      request.post(options, (error, res, body) => {
-        if (error) {
+      request
+        .get(fileURL)
+        .on("error", error => {
           reject(`API returned error on call ${error}`);
-        }
-        resolve({
-          body
+        })
+        .on("response", res => {
+          const options = {
+            url: this.apiURL + "test_upload",
+            formData: {
+              file: res
+            }
+          };
+          request.post(options, (error, res, body) => {
+            if (error) {
+              reject(`API returned error on call ${error}`);
+            }
+            resolve({
+              body
+            });
+          });
         });
-      });
     });
   }
 
-  readLocalFile(filename) {
-    return fs.createReadStream(__dirname + "/images/" + filename);
-  }
-
-  readFile(url) {
-    return request.get(url, (error, res, body) => {
-      if (error) {
-        throw error;
-      }
-      return body;
+  /**
+   * readAndClassifyFile
+   * @param {string} fileURL  url to file
+   * @return {Object}
+   */
+  readAndClassifyFile(fileURL) {
+    return new Promise((resolve, reject) => {
+      request
+        .get(fileURL)
+        .on("error", error => {
+          reject(`API returned error on call ${error}`);
+        })
+        .on("response", res => {
+          const options = {
+            url: this.apiURL + "classify/",
+            formData: {
+              file: res
+            }
+          };
+          request.post(options, (error, res, body) => {
+            if (error) {
+              reject(`API returned error on call ${error}`);
+            }
+            resolve({
+              body
+            });
+          });
+        });
     });
   }
 }
