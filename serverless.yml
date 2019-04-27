@@ -14,15 +14,9 @@ package:
 
 # Define function environment variables here
 # environment:
-#   variable2: value2
+#   variable: value
 
 functions:
-  http:
-    handler: handler.http
-    events:
-      - http:
-          path: http
-          method: get
   invoke:
     handler: handler.invoke
     events:

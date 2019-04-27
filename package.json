@@ -12,6 +12,7 @@
     "undeploy": "NODE_ENV=dev ./node_modules/.bin/serverless remove -v"
   },
   "dependencies": {
+    "request": "2.88.0",
     "serverless": "1.39.1"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-const { http, invoke } = require("../handler");
+const { invoke } = require("../handler");
 
 const fileId = 34426356747;
 const fileName = "sampleFileName.mp3";
@@ -28,17 +28,6 @@ const eventBody = {
   }
 };
 
-describe("http", () => {
-  test.skip("gives message for processing succeeds", () => {
-    expect.assertions(1);
-    return http().then(data =>
-      expect(data).toEqual({
-        message: "Processed successfully"
-      })
-    );
-  });
-});
-
 describe("invoke", () => {
   test("gives bad request when event is missing", async () => {
     expect.assertions(1);
@@ -50,23 +39,5 @@ describe("invoke", () => {
     expect.assertions(1);
     const data = await invoke({});
     expect(JSON.parse(data.body)).toEqual({ message: "Bad request" });
-  });
-
-  test.skip("gives error message when processing fails", async () => {
-    expect.assertions(1);
-    const body = JSON.stringify(eventBody);
-    const data = await invoke({ body });
-    expect(JSON.parse(data.body)).toEqual({
-      message: "Processing failed for file"
-    });
-  });
-
-  test.skip("gives data when processing succeeds", async () => {
-    expect.assertions(1);
-    const body = JSON.stringify(eventBody);
-    const data = await invoke({ body });
-    expect(JSON.parse(data.body)).toEqual({
-      message: "Processed successfully"
-    });
   });
 });

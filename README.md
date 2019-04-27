@@ -14,9 +14,6 @@ Enter `npm run test` in the terminal.
 You can deploy to AWS.
 Enter `npm run deploy` in the terminal.
 
-Now you can validate the deployment.
-Enter `serverless invoke -f http` or `serverless invoke -f http -d hello` in the terminal.
-
 You run the service by logging into Box and uploading an image.
 
 ## Request Change
